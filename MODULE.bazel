@@ -1,0 +1,7 @@
+module(
+    name = "bazel_first_principles",
+    version = "1.0.0",
+)
+
+nix_toolchain = use_extension("//:tools/nix_toolchain.bzl", "nix_toolchain_extension")
+use_repo(nix_toolchain, "nix_ghc")

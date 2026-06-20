@@ -1,0 +1,6 @@
+load("//:tools/haskell.bzl", "haskell_binary")
+
+haskell_binary(
+    name = "hello",
+    srcs = ["Main.hs"],
+)
