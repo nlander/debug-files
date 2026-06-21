@@ -1,5 +1,5 @@
 module(
-    name = "bazel_first_principles",
+    name = "debug_files",
     version = "1.0.0",
 )
 

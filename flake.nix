@@ -1,5 +1,5 @@
 {
-  description = "Building with bazel from first principles";
+  description = "Copy files and terminal output for debugging";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
@@ -23,16 +23,16 @@
         };
         packages = {
           default = pkgs.stdenv.mkDerivation {
-            pname = "bazel-first-principles";
+            pname = "debug-files";
             version = "0.1.0";
             src = ./.;
             buildInputs = [ haskellEnv ];
             buildPhase = ''
-              ghc -O2 -o bazel-first-principles Main.hs
+              ghc -O2 -o debug-files Main.hs
             '';
             installPhase = ''
               mkdir -p $out/bin
-              cp bazel-first-principles $out/bin/
+              cp debug-files $out/bin/
             '';
           };
           ghc-env = haskellEnv;

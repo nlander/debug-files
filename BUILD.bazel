@@ -1,6 +1,6 @@
 load("//:tools/haskell.bzl", "haskell_binary")
 
 haskell_binary(
-    name = "hello",
+    name = "debug_files",
     srcs = ["Main.hs"],
 )
