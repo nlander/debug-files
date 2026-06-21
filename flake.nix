@@ -1,7 +1,7 @@
 {
   description = "Copy files and terminal output for debugging";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
   };
   outputs = {self, nixpkgs, flake-utils}:
@@ -10,6 +10,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
         haskellEnv = pkgs.haskellPackages.ghcWithPackages (p: [
           p.streamly-core
+          p.streamly-process
         ]);
       in
       {

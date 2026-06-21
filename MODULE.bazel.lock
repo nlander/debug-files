@@ -190,8 +190,8 @@
   "moduleExtensions": {
     "//:tools/nix_toolchain.bzl%nix_toolchain_extension": {
       "general": {
-        "bzlTransitiveDigest": "oGKeOp+SnmxB5q/NkVRAbuWgkxX/fpdV0gFuxRmlAtY=",
-        "usagesDigest": "OG+6RDN733yxtrRlz05Gtl2dTWjWk4b7BPGOT2ovwiE=",
+        "bzlTransitiveDigest": "gNziIKNmiqd8H6vXfU0bsKhY/3cUzrkWScuM4ecmVgM=",
+        "usagesDigest": "hkxcckgXlIL3vWs2OtvilIi+iNJzfHyrV2JEhN2iCCY=",
         "recordedInputs": [],
         "generatedRepoSpecs": {
           "nix_ghc": {
