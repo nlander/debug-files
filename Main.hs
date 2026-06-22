@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
 module Main where
 
 import Data.Function ((&))
@@ -43,31 +42,22 @@ main = do
       `Stream.append` afterContents
       where
         beforeContents :: Stream IO Word8
-        beforeContents = Array.fromList "### "
-          `StreamK.cons` fileNameA
-          `StreamK.cons` Array.fromList "\n```"
-          `StreamK.cons` fileExtension
-          `StreamK.cons` Array.fromList "\n"
-          `StreamK.cons` StreamK.nil
-          & Array.fromChunksK
-          <&> Array.read
-          & Stream.concatEffect
+        beforeContents = "### "
+          ++ fileName
+          ++ "\n```"
+          ++ fileExtension
+          ++ "\n"
+          & Stream.fromList
           & Unicode.encodeUtf8
         afterContents :: Stream IO Word8
         afterContents = "\n```\n"
-                          & Stream.morphInner (pure . runIdentity)
+                          & Stream.fromList
                           & Unicode.encodeUtf8
-        fileExtension :: Array Char
-        fileExtension = if hasExtension
-          then Array.splitOn (== '.') fileNameA
-                 & Stream.fold Fold.latest
-                 & runIdentity
-                 & fromMaybe Array.empty
-          else Array.empty
-        hasExtension :: Bool
-        hasExtension = Array.foldr checkForDot False fileNameA
-        checkForDot :: Char -> Bool -> Bool
-        checkForDot '.' _ = True
-        checkForDot _   b = b
-        fileNameA :: Array Char
-        fileNameA = Array.fromList fileName
+        fileExtension :: String
+        fileExtension = if dot `elem` fileName
+          then reverse fileName
+                 & takeWhile (/= dot)
+                 & reverse
+          else ""
+        dot :: Char
+        dot = '.'
