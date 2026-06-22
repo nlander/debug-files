@@ -17,12 +17,22 @@ import qualified Streamly.FileSystem.File as File
 import qualified Streamly.Unicode.Stream as Unicode
 import qualified Streamly.Internal.Unicode.Stream as Unicode
 import qualified Streamly.System.Command as Command
+import System.Directory (setCurrentDirectory)
+import System.Environment (lookupEnv)
 
 main :: IO ()
-main = Stream.concatMap formatForDebug files
-         & Command.pipeBytes "wl-copy"
-         & Stream.fold Fold.drain
+main = do
+  initDebug
+  Stream.concatMap formatForDebug files
+    & Command.pipeBytes "wl-copy"
+    & Stream.fold Fold.drain
   where
+    initDebug :: IO ()
+    initDebug = do
+      mDebugDir <- lookupEnv "BUILD_WORKING_DIRECTORY"
+      case mDebugDir of
+        Just debugDir -> setCurrentDirectory debugDir
+        Nothing       -> pure ()
     files :: Stream IO FilePath
     files = File.read ".debug-files"
               & Unicode.decodeUtf8
