@@ -45,7 +45,7 @@ main = do
         beforeContents = "### "
           ++ fileName
           ++ "\n```"
-          ++ fileExtension
+          ++ debugHeaderLanguage
           ++ "\n"
           & Stream.fromList
           & Unicode.encodeUtf8
@@ -53,6 +53,12 @@ main = do
         afterContents = "\n```\n"
                           & Stream.fromList
                           & Unicode.encodeUtf8
+        debugHeaderLanguage :: String
+        debugHeaderLanguage = case fileExtension of
+          "hs"    -> "haskell"
+          "bzl"   -> "starlark"
+          "bazel" -> "starlark"
+          ext     -> ext
         fileExtension :: String
         fileExtension = if dot `elem` fileName
           then reverse fileName
