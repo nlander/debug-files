@@ -17,12 +17,13 @@ import qualified Streamly.Unicode.Stream as Unicode
 import qualified Streamly.Internal.Unicode.Stream as Unicode
 import qualified Streamly.System.Command as Command
 import System.Directory (setCurrentDirectory)
-import System.Environment (lookupEnv)
+import System.Environment (lookupEnv, getArgs)
 
 main :: IO ()
 main = do
+  args <- getArgs
   initDebug
-  Stream.concatMap formatForDebug files
+  debugStream ("--include-buffer" `elem` args)
     & Command.pipeBytes "wl-copy"
     & Stream.fold Fold.drain
   where
@@ -32,6 +33,25 @@ main = do
       case mDebugDir of
         Just debugDir -> setCurrentDirectory debugDir
         Nothing       -> pure ()
+    debugStream :: Bool -> Stream IO Word8
+    debugStream True = fileDebugStream
+      `Stream.append` tmuxBufferDebugStream
+    debugStream False = fileDebugStream
+    tmuxBufferDebugStream :: Stream IO Word8
+    tmuxBufferDebugStream = beforeBuffer
+      `Stream.append` Command.toBytes "tmux show-buffer"
+      `Stream.append` afterBuffer
+      where
+        beforeBuffer :: Stream IO Word8
+        beforeBuffer = "### Tmux Clipboard Buffer\n```text\n"
+                         & Stream.fromList
+                         & Unicode.encodeUtf8
+        afterBuffer :: Stream IO Word8
+        afterBuffer = "\n```\n"
+                        & Stream.fromList
+                        & Unicode.encodeUtf8
+    fileDebugStream :: Stream IO Word8
+    fileDebugStream = Stream.concatMap formatForDebug files
     files :: Stream IO FilePath
     files = File.read ".debug-files"
               & Unicode.decodeUtf8
