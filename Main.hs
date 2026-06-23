@@ -1,15 +1,8 @@
 module Main where
 
 import Data.Function ((&))
-import Data.Functor ((<&>))
-import Data.Functor.Identity (Identity(runIdentity))
-import Data.Maybe (fromMaybe)
 import Data.Word (Word8)
-import qualified Streamly.Data.Array as Array
-import Streamly.Data.Array (Array)
-import qualified Streamly.Internal.Data.Array as Array
 import qualified Streamly.Data.Stream as Stream
-import qualified Streamly.Data.StreamK as StreamK
 import Streamly.Data.Stream (Stream)
 import qualified Streamly.Data.Fold as Fold
 import qualified Streamly.FileSystem.File as File
