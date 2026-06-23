@@ -1,6 +1,9 @@
 module Main where
 
+import Data.Char (isSpace)
 import Data.Function ((&))
+import Data.Functor ((<&>))
+import Data.List (dropWhileEnd)
 import Data.Word (Word8)
 import qualified Streamly.Data.Stream as Stream
 import Streamly.Data.Stream (Stream)
@@ -25,7 +28,12 @@ main = do
       mDebugDir <- lookupEnv "BUILD_WORKING_DIRECTORY"
       case mDebugDir of
         Just debugDir -> setCurrentDirectory debugDir
-        Nothing       -> pure ()
+        Nothing       -> do
+          paneDir <- Command.toBytes "tmux display-message -p '#{pane_current_path}'"
+                       & Unicode.decodeUtf8
+                       & Stream.fold Fold.toList
+                       <&> dropWhileEnd isSpace
+          setCurrentDirectory paneDir
     debugStream :: Bool -> Stream IO Word8
     debugStream True = fileDebugStream
       `Stream.append` tmuxBufferDebugStream
