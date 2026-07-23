@@ -81,11 +81,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1784769885,
-        "narHash": "sha256-+UqHAIKGQoo24dWumhTClby2BaAdCiiANogJBwIfMuY=",
+        "lastModified": 1784770913,
+        "narHash": "sha256-rC449mFIMK5WY3ucqYhK6l/yP2c5LfGU1RsIMYqMwAU=",
         "owner": "nlander",
         "repo": "streamly-env",
-        "rev": "fbba2985461657182d72eff335a1515cc63a1036",
+        "rev": "2ce46d497dc8ee8437cef978b402435638e2b6e1",
         "type": "github"
       },
       "original": {
