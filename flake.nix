@@ -1,24 +1,20 @@
 {
   description = "Copy files and terminal output for debugging";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    streamly-env.url = "github:nlander/streamly-env";
   };
-  outputs = {self, nixpkgs, nixpkgs-unstable, flake-utils}:
+  outputs = {self, nixpkgs, streamly-env, flake-utils}:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
-        haskellEnv = pkgs.haskellPackages.ghcWithPackages (p: [
-          p.streamly-core
-          p.streamly-process
-        ]);
+        haskellEnv = streamly-env.packages.${system}.default;
       in
       {
         devShells.default = pkgs.mkShell {
           buildInputs = [
-            pkgs-unstable.bazel_9
+            pkgs.bazel_9
           ];
           shellHook = ''
             exec fish

@@ -1,3 +1,4 @@
 *.swp
 bazel-*
 .debug-files
+result
