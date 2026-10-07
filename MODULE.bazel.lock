@@ -188,15 +188,24 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
-    "//:tools/nix_toolchain.bzl%nix_toolchain_extension": {
+    "@@elodie_bazel_rules+//nix:definitions.bzl%nix_toolchain_extension": {
       "general": {
-        "bzlTransitiveDigest": "gNziIKNmiqd8H6vXfU0bsKhY/3cUzrkWScuM4ecmVgM=",
-        "usagesDigest": "hkxcckgXlIL3vWs2OtvilIi+iNJzfHyrV2JEhN2iCCY=",
+        "bzlTransitiveDigest": "oNsGgBOn6sgZsoCYpUVO0XYE8X7Ri9lrLNpSAl0UAXw=",
+        "usagesDigest": "d5ltoqnNu/kSK7fJDJ1GAxKZxaKLUER0+6jdTvWQ0RU=",
         "recordedInputs": [],
         "generatedRepoSpecs": {
           "nix_ghc": {
-            "repoRuleId": "@@//:tools/nix_toolchain.bzl%nix_ghc_repo",
-            "attributes": {}
+            "repoRuleId": "@@elodie_bazel_rules+//nix:definitions.bzl%nix_repo",
+            "attributes": {
+              "flake_output": "ghc-env",
+              "has_lib": true
+            }
+          },
+          "nix_xlsx2csv": {
+            "repoRuleId": "@@elodie_bazel_rules+//nix:definitions.bzl%nix_repo",
+            "attributes": {
+              "flake_output": "xlsx2csv"
+            }
           }
         }
       }

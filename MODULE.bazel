@@ -3,5 +3,9 @@ module(
     version = "1.0.0",
 )
 
-nix_toolchain = use_extension("//:tools/nix_toolchain.bzl", "nix_toolchain_extension")
-use_repo(nix_toolchain, "nix_ghc")
+bazel_dep(name = "elodie_bazel_rules", version = "0.1.0")
+git_override(
+    module_name = "elodie_bazel_rules",
+    remote = "https://github.com/nlander/elodie_bazel_rules.git",
+    commit = "069c1ce1041a055b95d9056150909cd8045946f2",
+)

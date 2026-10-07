@@ -1,6 +1,11 @@
-load("//:tools/haskell.bzl", "haskell_binary")
+load("@elodie_bazel_rules//haskell:definitions.bzl", "haskell_binary", "haskell_repl")
 
 haskell_binary(
-    name = "debug_files",
+    name = "debug_files_binary",
+    srcs = ["Main.hs"],
+)
+
+haskell_repl(
+    name = "debug_files_repl",
     srcs = ["Main.hs"],
 )
