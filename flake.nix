@@ -3,13 +3,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    streamly-env.url = "github:nlander/streamly-env";
+    bazel-rules.url = "github:nlander/elodie_bazel_rules";
   };
-  outputs = {self, nixpkgs, streamly-env, flake-utils}:
+  outputs = {self, nixpkgs, flake-utils, bazel-rules}:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        haskellEnv = streamly-env.packages.${system}.default;
+        haskellEnv = bazel-rules.packages.${system}.ghc-env;
       in
       {
         devShells.default = pkgs.mkShell {
