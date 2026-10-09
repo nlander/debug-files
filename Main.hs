@@ -57,6 +57,11 @@ main = do
     files = File.read ".debug-files"
               & Unicode.decodeUtf8
               & Unicode.lines Fold.toList
+              & Stream.filter checkComment
+    checkComment :: String -> Bool
+    checkComment ""      = False
+    checkComment ('#':_) = False
+    checkComment _       = True
     formatForDebug :: FilePath -> Stream IO Word8
     formatForDebug fileName = beforeContents
       `Stream.append` File.read fileName
